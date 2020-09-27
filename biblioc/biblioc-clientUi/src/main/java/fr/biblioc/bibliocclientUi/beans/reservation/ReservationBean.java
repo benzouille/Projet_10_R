@@ -136,7 +136,6 @@ public class ReservationBean {
         this.extension_possible = extension_possible;
     }
 
-
     public ExemplaireBean getExemplaire() {
         return exemplaire;
     }
