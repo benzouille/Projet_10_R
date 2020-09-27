@@ -73,6 +73,17 @@ public class ExemplaireController implements HealthIndicator {
     }
 
     /**
+     * Retourne le nombre d'exemplaire présent du livre dans cette bibliothèque
+     * @param id_livre int
+     * @param id_biblio int
+     * @return int nbre exemplaire
+     */
+    @GetMapping( value = "/Exemplaires/count/{id_livre}/{id_biblio}")
+    public int exemplaireCount(@PathVariable("id_livre") int id_livre,@PathVariable("id_biblio") int id_biblio){
+        return exemplaireDao.nbreExemplaire(id_livre, id_biblio);
+    }
+
+    /**
      * Récuperer un exemplaire par son id
      * @param id int
      * @return bean {@link Exemplaire}
@@ -181,6 +192,17 @@ public class ExemplaireController implements HealthIndicator {
             log.info("ExemplaireDto : " + exemplaireDto);
         }
         return exemplaireDto;
+    }
+
+    /**
+     * transforme un objet exemplaireDto en exemplaire
+     * @param exemplaireDto DTO
+     * @return exemplaire ENTITY
+     */
+    public Exemplaire getExemplaireFromDto(ExemplaireDto exemplaireDto) {
+        Exemplaire exemplaire = exemplaireMapper.exemplaireDtoToExemplaire(exemplaireDto);
+            log.info("Exemplaire : " + exemplaire);
+        return exemplaire;
     }
 
     /**
