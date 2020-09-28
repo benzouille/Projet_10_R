@@ -22,4 +22,7 @@ public interface ExemplaireDao extends JpaRepository<Exemplaire, Integer> {
 
     @Query(value = "SELECT COUNT(*) FROM exemplaire WHERE id_livre = :id_livre AND id_biblio = :id_biblio", nativeQuery = true)
     int nbreExemplaire(@Param("id_livre") int id_livre, @Param("id_biblio") int id_biblio);
+
+    @Query(value = "SELECT * FROM exemplaire WHERE id_livre = :id_livre AND id_biblio = :id_biblio AND disponible = TRUE", nativeQuery = true)
+    List<Exemplaire> exemplaireDispoByIdLivreAndIdBiblio(@Param("id_livre") int id_livre, @Param("id_biblio") int id_biblio);
 }

@@ -24,6 +24,9 @@ public interface BibliocReservationProxy {
     @GetMapping(value = "/ListeAttente/{id_livre}/{id_bibliotheque}")
     ListeAttenteBean listAttente(@PathVariable("id_livre") int id_livre,@PathVariable("id_bibliotheque") int id_bibliotheque);
 
+    @GetMapping(value = "/exemplaireDispo/{id_livre}/{id_bibliotheque}")
+    List<ExemplaireBean> exemplaireDispo(@PathVariable("id_livre") int id_livre,@PathVariable("id_bibliotheque") int id_bibliotheque);
+
     @GetMapping(value = "/PreReservations/{id_compte}")
     List<PreReservationBean> listPreReservationByIdUser(@PathVariable("id_compte") int id_compte);
 

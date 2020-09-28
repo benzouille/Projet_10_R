@@ -83,6 +83,11 @@ public class ExemplaireController implements HealthIndicator {
         return exemplaireDao.nbreExemplaire(id_livre, id_biblio);
     }
 
+    @GetMapping(value = "/exemplaireDispo/{id_livre}/{id_bibliotheque}")
+    public List<Exemplaire> exemplaireDispo(@PathVariable("id_livre") int id_livre,@PathVariable("id_bibliotheque") int id_biblio) {
+        return exemplaireDao.exemplaireDispoByIdLivreAndIdBiblio(id_livre, id_biblio);
+    }
+
     /**
      * Récuperer un exemplaire par son id
      * @param id int

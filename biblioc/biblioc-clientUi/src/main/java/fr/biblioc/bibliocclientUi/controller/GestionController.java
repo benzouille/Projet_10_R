@@ -171,6 +171,26 @@ public class GestionController {
         return new ModelAndView("redirect:/gestion");
     }
 
+    @PostMapping(value = "/gestion/addByUser")
+    public ModelAndView addByUser(String id_livre, String id_bibliotheque, RedirectAttributes redirectAttributes) {
+
+        int livreId = Integer.parseInt(id_livre);
+        int biblioId = Integer.parseInt(id_bibliotheque);
+        ExemplaireBean exemplaire;
+
+        //Recuperer un exemplaire libre avec l'id livre et l'id biblio
+        exemplaire = reservationProxy.exemplaireDispo(livreId, biblioId).get(0);
+
+        exemplaire.setDisponible(false);
+        ReservationBean reservation = new ReservationBean(biblioId, newDate(), exemplaire);
+        reservationProxy.newReservation(reservation);
+        reservationProxy.updateExemplaire(exemplaire);
+
+        log.info("Ajout pret " + reservation.toString());
+
+        return new ModelAndView("redirect:/mes_emprunts");
+    }
+
     @PostMapping(value = "/gestion/userPrereservation")
     public ModelAndView prereservation(String id_livre, String id_bibliotheque, HttpServletRequest request) {
 

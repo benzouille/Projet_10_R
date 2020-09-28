@@ -54,7 +54,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                            <form name="réservation" action="#" th:action="@{/gestion/reservation}" method="post">
+                                            <form name="réservation" action="#" th:action="@{/gestion/addByUser}" method="post">
                                                 <input type="hidden" name="id_livre" th:value="${livre.getid_livre()}" />
                                                 <input type="hidden" name="id_bibliotheque" th:value="${bibliotheque.getid_biblio()}" />
                                                 <label>le livre </label>
