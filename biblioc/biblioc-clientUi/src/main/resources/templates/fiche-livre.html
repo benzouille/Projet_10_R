@@ -37,14 +37,22 @@
 
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-action turquoise" th:each="bibliotheque : ${bibliotheques}">
-                        <span th:text="${bibliotheque.nom}"> </span>
+                        <span th:text="${bibliotheque.nom} + ${bibliotheque.getid_biblio()}"> </span>
 
-                        <button th:if="${bibliotheque.countExemplaireLivre() > 0}" type="button" class="btn btn-primary pull-right"  data-toggle="modal" data-target="#Modal1">Disponible <span class="badge badge-light pull-right" style="margin-top: 5px ; margin-left: 5px" th:text="${bibliotheque.countExemplaireLivre()}"></span></button>
-                        <button th:if="${bibliotheque.countExemplaireLivre() == 0 and bibliotheque.listesAttentes.get(0).getSizeListAttente() > 0}" type="button" class="btn btn-warning pull-right"  data-toggle="modal" data-target="#Modal2">Réserver <span class="badge badge-light pull-right" style="margin-top: 5px ; margin-left: 5px" th:text="${bibliotheque.countExemplaireLivre()}"></span></button>
-                        <button th:if="${bibliotheque.countExemplaireLivre() == 0 and bibliotheque.listesAttentes.get(0).getSizeListAttente() == 0}" type="button" disabled class="btn btn-danger pull-right">Indisponible <span class="badge badge-light pull-right" style="margin-top: 5px ; margin-left: 5px" th:text="${bibliotheque.countExemplaireLivre()}"></span></button>
+                        <button th:if="${bibliotheque.countExemplaireLivre() > 0}"
+                                type="button" class="btn btn-primary pull-right"  data-toggle="modal" data-target="#Modal-reservation" th:attr="data-target='#modal-reservation'+${bibliotheque.getid_biblio()}">
+                            Disponible <span class="badge badge-light pull-right" style="margin-top: 5px ; margin-left: 5px" th:text="${bibliotheque.countExemplaireLivre()}"></span></button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="ModalLabel1" aria-hidden="true">
+                        <button th:if="${bibliotheque.countExemplaireLivre() == 0 and bibliotheque.listesAttentes.get(0).getSizeListAttente() > 0}"
+                                type="button" class="btn btn-warning pull-right"  data-toggle="modal" th:attr="data-target='#modal-prereservation'+${bibliotheque.getid_biblio()}">
+                            Réserver <span class="badge badge-light pull-right" style="margin-top: 5px ; margin-left: 5px" th:text="${bibliotheque.countExemplaireLivre()}"></span></button>
+
+                        <button th:if="${bibliotheque.countExemplaireLivre() == 0 and bibliotheque.listesAttentes.get(0).getSizeListAttente() == 0}"
+                                type="button" disabled class="btn btn-danger pull-right">
+                            Indisponible <span class="badge badge-light pull-right" style="margin-top: 5px ; margin-left: 5px" th:text="${bibliotheque.countExemplaireLivre()}"></span></button>
+
+                        <!-- Modal reservation-->
+                        <div class="modal fade" th:id="modal-reservation+${bibliotheque.getid_biblio()}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel1" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -58,9 +66,9 @@
                                                 <input type="hidden" name="id_livre" th:value="${livre.getid_livre()}" />
                                                 <input type="hidden" name="id_bibliotheque" th:value="${bibliotheque.getid_biblio()}" />
                                                 <label>le livre </label>
-                                                <label th:text="${livre.titre}"></label>
+                                                <label th:text="${livre.titre} + ${livre.getid_livre()}"></label>
                                                 <label>est disponible dans la bibliothèque</label>
-                                                <label th:text="${bibliotheque.getNom()}"></label>
+                                                <label th:text="${bibliotheque.getNom()} + ${bibliotheque.getid_biblio()}"></label>
                                                 <label>Souhaitez vous le réserver ? </label>
                                                 <input type="submit" class="btn btn-primary" value="Réserver" />
                                             </form>
@@ -72,7 +80,8 @@
                             </div>
                         </div>
 
-                        <div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="ModalLabel2" aria-hidden="true">
+                        <!-- Modal prereservation-->
+                        <div class="modal fade" th:id="modal-reservation+${bibliotheque.getid_biblio()}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel2" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">

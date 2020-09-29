@@ -158,7 +158,6 @@ public class BibliothequeController {
         LivreBean livre = bibliothequeProxy.getLivre(id);
         List<ExemplaireBean> exemplaires = reservationProxy.getExemplairesByIdLivreDispo(id);
         List<BibliothequeBean> bibliotheques = reservationProxy.listBibliotheques();
-
         List<ListeAttenteBean> listeAttentes = reservationProxy.listAttente(id);
 
         populate(bibliotheques, exemplaires, listeAttentes);
@@ -172,6 +171,7 @@ public class BibliothequeController {
     private void populate(List<BibliothequeBean> bibliotheques, List<ExemplaireBean> exemplaires, List<ListeAttenteBean> listeAttentes){
 
         for (BibliothequeBean bibliotheque : bibliotheques) {
+            //log.debug("bibliotheque : ", bibliotheque);
             for (ExemplaireBean exemplaire : exemplaires) {
                 if (exemplaire.getBibliotheque().getid_biblio() == bibliotheque.getid_biblio()){
                     bibliotheque.addExemplaire(exemplaire);
@@ -179,6 +179,7 @@ public class BibliothequeController {
             }
 
             for(ListeAttenteBean listeAttente : listeAttentes){
+                //log.debug("liste attente : ", listeAttente);
                 listeAttente.setNbreExemplaire(getExemplaireNbre(listeAttente.getId_livre(), listeAttente.getId_bibliotheque()));
                 if (listeAttente.getId_bibliotheque() == bibliotheque.getid_biblio()){
                     bibliotheque.addListAttente(listeAttente);
